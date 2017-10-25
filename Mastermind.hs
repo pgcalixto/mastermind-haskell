@@ -13,6 +13,7 @@ This is just the player.
 module Mastermind
 ( arrangements
 , getPoints
+, makeGuess
 , updatePool
 ) where
 
@@ -40,3 +41,18 @@ updatePool (poolH:poolT) guess points =
     if (poolH /= guess && getPoints guess poolH == points) then
       poolH : updatePool poolT guess points
     else updatePool poolT guess points
+
+-- | Given the current pool, the last guess and its points, makes a new guess.
+makeGuess :: [[Int]] -> [Int] -> [Int]
+makeGuess pool points =
+  fst $ makeGuess' pool pool points
+
+makeGuess' :: [[Int]] -> [[Int]] -> [Int] -> ([Int], Int)
+makeGuess' wholePool [guess] points =
+  (guess, score)
+  where score = length $ updatePool wholePool guess points
+makeGuess' wholePool (poolH : poolT) points
+  | currScore <= score = (poolH, currScore)
+  | otherwise          = (guess, score)
+  where currScore = length $ updatePool wholePool poolH points
+        (guess, score) = makeGuess' wholePool poolT points

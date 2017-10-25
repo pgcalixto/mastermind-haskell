@@ -34,3 +34,12 @@ main = hspec $ do
       in do (updatePool pool [1,2,3,4] [0,4])
         `shouldBe` [[2,1,4,3], [2,3,4,1], [2,4,1,3], [3,1,4,2], [3,4,1,2],
                     [3,4,2,1], [4,1,2,3], [4,3,1,2], [4,3,2,1]]
+
+  describe "make guess" $ do
+
+    it "returns the desired new guess" $
+      let pool = [[2,1,4,3], [2,3,4,1], [2,4,1,3], [3,1,4,2], [3,4,1,2],
+                  [3,4,2,1], [4,1,2,3], [4,3,1,2], [4,3,2,1]]
+          points = [0,4]
+          guess = [2,3,4,1]
+      in do makeGuess pool points `shouldBe` guess

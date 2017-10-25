@@ -47,6 +47,16 @@ makeGuess :: [[Int]] -> [Int] -> [Int]
 makeGuess pool points =
   fst $ makeGuess' pool pool points
 
+{-|
+  Return a tuple containing the new best guess and its score.
+  This is done by implementing the Knuth's algorithm.
+
+  Algorithm description:
+  For the head X of the current pool, we calculate how many of the elements in
+  the whole pool match its points, if X was the answer. This number of matched
+  elements is X's score.
+  The best guess is the element with the minimal score.
+-}
 makeGuess' :: [[Int]] -> [[Int]] -> [Int] -> ([Int], Int)
 makeGuess' wholePool [guess] points =
   (guess, score)

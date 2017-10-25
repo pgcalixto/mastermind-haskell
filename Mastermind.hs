@@ -12,6 +12,8 @@ This is just the player.
 
 module Mastermind
 ( arrangements
+, points
+, updatePool
 ) where
 
 import Data.List (nub)
@@ -27,3 +29,14 @@ points answer guess =
   [c, r]
   where c = length $ filter id $ zipWith (==) answer guess
         r = (length . filter (`elem` answer) $ guess) - c
+
+{-|
+  Updates the pool given an existent pool, the last guess and its points,
+  and returns the updated pool.
+-}
+updatePool :: [[Int]] -> [Int] -> Int -> Int -> [[Int]]
+updatePool [] _ _ _ = []
+updatePool (poolH:poolT) guess correct regular =
+    if (poolH /= guess && points guess poolH == [correct, regular]) then
+      poolH : updatePool poolT guess correct regular
+    else updatePool poolT guess correct regular

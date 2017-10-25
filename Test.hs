@@ -26,3 +26,11 @@ main = hspec $ do
       let answer = [5,1,6,3]
           guess  = [2,5,3,1]
       in do points answer guess `shouldBe` [0,3]
+
+  describe "pool" $ do
+
+    it "returns the desired new pool" $
+      let pool = arrangements
+      in do (updatePool pool [1,2,3,4] 0 4)
+        `shouldBe` [[2,1,4,3], [2,3,4,1], [2,4,1,3], [3,1,4,2], [3,4,1,2],
+                    [3,4,2,1], [4,1,2,3], [4,3,1,2], [4,3,2,1]]

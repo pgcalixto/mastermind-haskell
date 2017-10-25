@@ -20,3 +20,10 @@ import Data.List (nub)
 arrangements :: [[Int]]
 arrangements = filter ((==4) . length) $
                map (nub) [x | x <- mapM (const [1,2,3,4,5,6]) [1..4]]
+
+-- | Returns correct and regular points of the guess, given the answer
+points :: Eq a => [a] -> [a] -> [Int]
+points answer guess =
+  [c, r]
+  where c = length $ filter id $ zipWith (==) answer guess
+        r = (length . filter (`elem` answer) $ guess) - c
